@@ -19,8 +19,7 @@ class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!  // This property is only valid between onCreateView and onDestroyView.
 
-    private lateinit var viewModel: CatViewModel
-    // private val catViewModel: CatViewModel by viewModels()
+    private val catViewModel: CatViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,15 +31,15 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[CatViewModel::class.java]
-
         useModel()
     }
 
     private fun useModel() {
-        viewModel.allCats.observe(viewLifecycleOwner, Observer {
-            val cat = it.first()
-            binding.message.text = cat.name
+        catViewModel.allCats.observe(viewLifecycleOwner, Observer { cats ->
+            cats?.let {
+                val cat = it.first()
+                binding.message.text = cat.name
+            }
         })
     }
 
