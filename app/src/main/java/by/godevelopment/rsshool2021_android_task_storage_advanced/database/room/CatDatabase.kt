@@ -20,7 +20,7 @@ abstract class CatDataBase : RoomDatabase() {
 
         // Populating the database isn't related to a UI lifecycle, therefore you shouldn't use a CoroutineScope like viewModelScope.
         // It's related to the app's lifecycle.
-        // You'll update the WordsApplication to contain an applicationScope, then pass that to the WordRoomDatabase.getDatabase.
+        // You'll update the CatsApplication to contain an applicationScope, then pass that to the CatRoomDatabase.getDatabase.
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
@@ -33,7 +33,7 @@ abstract class CatDataBase : RoomDatabase() {
                     CatDataBase::class.java,
                     "app_database"
                 )
-                    .addCallback(WordDatabaseCallback(scope))
+                    .addCallback(CatDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -42,11 +42,11 @@ abstract class CatDataBase : RoomDatabase() {
         }
     }
 
-    private class WordDatabaseCallback(
+    private class CatDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
-        // In the WordRoomDatabase, you'll create a custom implementation of the RoomDatabase.Callback(),
+        // In the CatRoomDatabase, you'll create a custom implementation of the RoomDatabase.Callback(),
         // that also gets a CoroutineScope as constructor parameter.
         // Then, you override the onCreate method to populate the database.
         override fun onCreate(db: SupportSQLiteDatabase) {
@@ -59,11 +59,15 @@ abstract class CatDataBase : RoomDatabase() {
                     catDao.deleteAll()
 
                     // Add sample
-                    val id = 1
+                    val id = 0
                     val name = "Jesus"
                     val age = 10
                     val breed = "Godcat"
                     var cat = Cat(id, name, age, breed)
+                    catDao.insertCat(cat)
+                    cat = Cat(0, "Bob", 25, "Human")
+                    catDao.insertCat(cat)
+                    cat = Cat(0, "Tom", 20, "Toon'sCat")
                     catDao.insertCat(cat)
                 }
             }
