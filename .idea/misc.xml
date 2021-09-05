@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/drawable-v24/ic_order_list_50.xml" value="0.3769230769230769" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/layout/activity_main.xml" value="0.2595108695652174" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/layout/cat_add_fragment.xml" value="0.2595108695652174" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/layout/item_cat.xml" value="0.2595108695652174" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/layout/list_fragment.xml" value="0.25" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/layout/main_content.xml" value="0.2595108695652174" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/layout/main_fragment.xml" value="0.17831813576494426" />
+        <entry key="..\:/Android Project/rsschool2021/RSShool2021-Android-task-Storage-advanced/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

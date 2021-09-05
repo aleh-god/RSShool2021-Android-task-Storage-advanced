@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="by.godevelopment.rsshool2021androidtaskstorage.MainActivity">
+
+    <group
+        android:id="@+id/main_menu_group">
+        <item
+            android:id="@+id/menu_search"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="@string/search"
+            app:showAsAction="ifRoom|withText"
+            app:actionViewClass="android.widget.SearchView"/>
+
+        <item
+            android:id="@+id/menu_order"
+            android:orderInCategory="100"
+            android:title="@string/custom_order"
+            app:showAsAction="always"
+            android:icon="@drawable/ic_order_list_50"
+            />
+    </group>
+</menu>
