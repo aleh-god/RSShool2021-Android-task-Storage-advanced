@@ -3,11 +3,15 @@ package by.godevelopment.rsshool2021_android_task_storage_advanced.database.sql
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.os.SystemClock.uptimeMillis
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.map
 import by.godevelopment.rsshool2021_android_task_storage_advanced.database.room.CatDao
 import by.godevelopment.rsshool2021_android_task_storage_advanced.entity.Cat
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 
 class CatDaoSqlImplementation(context: Context) : CatDao {
 
@@ -15,8 +19,14 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
     private val dbRead = catReaderDbHelper.readableDatabase
     private val dbWrite = catReaderDbHelper.writableDatabase
 
-    override fun getAll(): Flow<List<Cat>> {
+    private var counterChangeDataBase = 0
+    private val updateChangeDataBaseCounter = MutableLiveData<Int>()
+    init {
+        updateChangeDataBaseCounter.value = 0
+    }
+    private val listCatsFromDB: LiveData<List<Cat>> = updateChangeDataBaseCounter.map { it -> getListCatsFromDB() }
 
+    private fun getListCatsFromDB(): List<Cat> {
         val cursor : Cursor = dbRead.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
         val listOfResult = mutableListOf<Cat>()
 
@@ -34,11 +44,21 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
             }
             cursor.close()
         }
-        return flowOf(listOfResult)
+        return listOfResult
+    }
+
+    private fun updateChangeDataBaseCounter() {
+        updateChangeDataBaseCounter.value = ++counterChangeDataBase
+    }
+
+    override fun getAll(): Flow<List<Cat>> {
+        // return dataBaseFlow
+        return listCatsFromDB.asFlow()
     }
 
     override suspend fun deleteAll() {
         dbRead.rawQuery("DELETE FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
+        // updateDataBaseFlow()
     }
 
     override suspend fun insertCat(cat: Cat) {
@@ -52,7 +72,10 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
         // Insert the new row, returning the primary key value of the new row
         val newRowId = dbWrite?.insert(ContractDB.FeedEntry.TABLE_NAME, null, values)
 
-        if (newRowId != 0L) Log.i("DAO", "Insert cat complete.")
+        if (newRowId != 0L) {
+            Log.i("DAO", "Insert cat complete.")
+            updateChangeDataBaseCounter()
+        }
         else Log.i("DAO", "ERROR insert cat!!!")
     }
 
@@ -75,7 +98,10 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
             selection,
             selectionArgs)
 
-        if (updateRows != 0) Log.i("DAO", "Update cat complete.")
+        if (updateRows != 0) {
+            Log.i("DAO", "Update cat complete.")
+            updateChangeDataBaseCounter()
+        }
         else Log.i("DAO", "ERROR update cat!!!")
     }
 
@@ -87,7 +113,10 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
         // Issue SQL statement.
         val deletedRows = dbWrite.delete(ContractDB.FeedEntry.TABLE_NAME, selection, selectionArgs)
 
-        if (deletedRows != 0) Log.i("DAO", "Delete cat complete.")
+        if (deletedRows != 0) {
+            Log.i("DAO", "Delete cat complete.")
+            updateChangeDataBaseCounter()
+        }
         else Log.i("DAO", "ERROR delete cat!!!")
     }
 
