@@ -13,11 +13,12 @@
             app:actionViewClass="android.widget.SearchView"/>
 
         <item
-            android:id="@+id/menu_order"
+            android:id="@+id/menu_settings"
+            android:onClick="settingsClick"
             android:orderInCategory="100"
             android:title="@string/custom_order"
             app:showAsAction="always"
-            android:icon="@drawable/ic_order_list_50"
+            android:icon="@drawable/ic_baseline_settings_24"
             />
     </group>
 </menu>

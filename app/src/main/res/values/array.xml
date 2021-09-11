@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DAO names array -->
+    <string-array name="dao_names_array">
+        <item>ROOM</item>
+        <item>SQL</item>
+    </string-array>
+
+    <!-- DAO values array -->
+    <string-array name="dao_values_array">
+        <item>ROOM</item>
+        <item>SQL</item>
+    </string-array>
+
+    <!-- sort names array -->
+    <string-array name="order_sortBy_names_array">
+        <item>Sort by ID</item>
+        <item>Sort by name</item>
+        <item>Sort by age</item>
+        <item>Sort by breed</item>
+    </string-array>
+
+    <!-- sort values array -->
+    <string-array name="order_sortBy_values_array">
+        <item>ID</item>
+        <item>Name</item>
+        <item>Age</item>
+        <item>Breed</item>
+    </string-array>
+</resources>

@@ -6,4 +6,12 @@
     <string name="cate_age">Cat age</string>
     <string name="cat_breed">Cat Breed</string>
     <string name="add_button">Add button</string>
+    <string name="add_new_cat">Add new cat</string>
+
+    <string name="titleListFragment">Task Storage</string>
+    <string name="titleAddCatFragment">Add cat to list</string>
+    <string name="titleSettingsFragment">Settings</string>
+    <string name="check">Done</string>
+    <string name="add_item_list_button">Add item list button</string>
+    <string name="settings">Settings</string>
 </resources>

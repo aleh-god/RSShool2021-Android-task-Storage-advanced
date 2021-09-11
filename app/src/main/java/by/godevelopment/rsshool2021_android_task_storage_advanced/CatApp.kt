@@ -10,7 +10,7 @@ import kotlinx.coroutines.SupervisorJob
 
 class CatApp: Application() {
 
-    private val daoChoice = 1
+    private val daoChoice = "room"
 
     // No need to cancel this scope as it'll be torn down with the process
     private val applicationScope = CoroutineScope(SupervisorJob())
@@ -23,7 +23,7 @@ class CatApp: Application() {
     //val repository by lazy { CatRepository(dataBaseRoom.catDao()) }
     val repository by lazy {
         when (daoChoice) {
-            1 -> CatRepository(catDaoSqlImplementation)
+            "sql" -> CatRepository(catDaoSqlImplementation)
             else -> CatRepository(dataBaseRoom.catDao())
         }}
 

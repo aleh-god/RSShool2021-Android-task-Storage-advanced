@@ -1,38 +1,135 @@
 package by.godevelopment.rsshool2021_android_task_storage_advanced
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import by.godevelopment.rsshool2021_android_task_storage_advanced.databinding.ActivityMainBinding
-import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.CatViewModel
-import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.CatViewModelFactory
-import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.ListFragment
-import androidx.activity.viewModels
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.contractNavigation.CustomAction
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.contractNavigation.HasCustomAction
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.contractNavigation.HasCustomTitle
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.contractNavigation.Navigator
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.fragments.AddItemFragment
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.fragments.ListFragment
+import by.godevelopment.rsshool2021_android_task_storage_advanced.ui.main.fragments.SettingsFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
 
-    private lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
-    // To create the ViewModel you used the viewModels delegate, passing in an instance of our ViewModelFactory.
-    // This is constructed based on the repository retrieved from the Application.
-    // This property can be accessed only after the Activity is attached to the Application, and access prior to that will result in IllegalArgumentException.
-//    private val catViewModel: CatViewModel by viewModels {
-//         CatViewModelFactory((application as CatApp).repository)
-//    }
+    private val currentFragment: Fragment
+        get() = supportFragmentManager.findFragmentById(R.id.main_container)!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_content)
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, ListFragment.newInstance())
-                .commitNow()
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.main_container, ListFragment.newInstance())
+                .commit()
         }
-        setupComponents()
+        // setupComponents()
     }
 
     private fun setupComponents() {
-        // setSupportActionBar(binding.toolbar)
-        // setupFabAndToolbar()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        updateUi()
+        return true
+    }
+
+    fun settingsClick(item: android.view.MenuItem) {
+        showSettingFragment()
+    }
+
+    fun fabOnClick(view: android.view.View) {
+        showAddItemFragment()
+    }
+
+    private fun launchFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.main_container, fragment)
+            .commit()
+    }
+
+    override fun showAddItemFragment() {
+        binding.fab.hide()
+        launchFragment(AddItemFragment.newInstance())
+    }
+
+    override fun showSettingFragment() {
+        binding.fab.hide()
+        launchFragment(SettingsFragment())
+
+    }
+
+    override fun showListFragment() {
+        binding.fab.show()
+        launchFragment(ListFragment.newInstance())
+    }
+
+    override fun goBack() {
+        onBackPressed()
+    }
+
+    private fun updateUi() {
+        val fragment = currentFragment
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val dao = sharedPreferences.getString("dao", "")
+        binding.toolbar.subtitle = "$dao DBMS implementation"
+
+        if (fragment is HasCustomTitle) {
+            binding.toolbar.title = getString(fragment.getTitleRes())
+        } else {
+            binding.toolbar.title = "App"
+        }
+
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            // Get a support ActionBar corresponding to this toolbar and enable the Up button
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
+        } else {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            supportActionBar?.setDisplayShowHomeEnabled(false)
+        }
+
+        if (fragment is HasCustomAction) {
+            createCustomToolbarAction(fragment.getCustomAction())
+        } else {
+            binding.toolbar.menu.clear()
+        }
+    }
+
+    private fun createCustomToolbarAction(action: CustomAction) {
+        binding.toolbar.menu.clear() // clearing old action if it exists before assigning a new one
+
+        val iconDrawable = DrawableCompat.wrap(ContextCompat.getDrawable(this, action.iconRes)!!)
+        iconDrawable.setTint(Color.WHITE)
+
+        val menuItem = binding.toolbar.menu.add(action.textRes)
+        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        menuItem.icon = iconDrawable
+        menuItem.setOnMenuItemClickListener {
+            action.onCustomAction.run()
+            return@setOnMenuItemClickListener true
+        }
+
     }
 }

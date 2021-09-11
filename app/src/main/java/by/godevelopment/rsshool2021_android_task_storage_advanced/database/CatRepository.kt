@@ -1,13 +1,16 @@
 package by.godevelopment.rsshool2021_android_task_storage_advanced.database
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import by.godevelopment.rsshool2021_android_task_storage_advanced.database.room.CatDao
 import by.godevelopment.rsshool2021_android_task_storage_advanced.entity.Cat
 import kotlinx.coroutines.flow.Flow
 
 class CatRepository (private val catDao: CatDao) {
 
-    val getFlowAllCats: Flow<List<Cat>> = catDao.getAll()
+    val getFlowAllCats: Flow<List<Cat>> = catDao.getAllFlow()
+
+    val getLiveDataAllCats: LiveData<List<Cat>> = catDao.getAllLiveData()
 
     // Обозначает, что аннотированный метод должен вызываться только в рабочем потоке.
     @WorkerThread

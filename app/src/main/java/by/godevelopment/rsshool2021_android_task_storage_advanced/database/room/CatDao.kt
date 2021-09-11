@@ -1,5 +1,6 @@
 package by.godevelopment.rsshool2021_android_task_storage_advanced.database.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import by.godevelopment.rsshool2021_android_task_storage_advanced.entity.Cat
 import kotlinx.coroutines.flow.Flow
@@ -8,7 +9,10 @@ import kotlinx.coroutines.flow.Flow
 interface CatDao {
 
     @Query("SELECT * FROM cat_table")
-    fun getAll(): Flow<List<Cat>>
+    fun getAllFlow(): Flow<List<Cat>>
+
+    @Query("SELECT * FROM cat_table")
+    fun getAllLiveData(): LiveData<List<Cat>>
 
     @Query("DELETE FROM cat_table")
     suspend fun deleteAll()

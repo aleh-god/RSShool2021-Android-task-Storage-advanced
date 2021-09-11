@@ -26,6 +26,10 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
     }
     private val listCatsFromDB: LiveData<List<Cat>> = updateChangeDataBaseCounter.map { it -> getListCatsFromDB() }
 
+    private fun updateChangeDataBaseCounter() {
+        updateChangeDataBaseCounter.value = ++counterChangeDataBase
+    }
+
     private fun getListCatsFromDB(): List<Cat> {
         val cursor : Cursor = dbRead.rawQuery("SELECT * FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
         val listOfResult = mutableListOf<Cat>()
@@ -44,21 +48,22 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
             }
             cursor.close()
         }
-        return listOfResult
+        return if (!listOfResult.isNullOrEmpty()) listOfResult else emptyList()
     }
 
-    private fun updateChangeDataBaseCounter() {
-        updateChangeDataBaseCounter.value = ++counterChangeDataBase
+    override fun getAllFlow(): Flow<List<Cat>> {
+        return flow {
+            emit(getListCatsFromDB())
+        }
     }
 
-    override fun getAll(): Flow<List<Cat>> {
-        // return dataBaseFlow
-        return listCatsFromDB.asFlow()
+    override fun getAllLiveData(): LiveData<List<Cat>> {
+        return listCatsFromDB
     }
 
     override suspend fun deleteAll() {
         dbRead.rawQuery("DELETE FROM ${ContractDB.FeedEntry.TABLE_NAME}", null)
-        // updateDataBaseFlow()
+        updateChangeDataBaseCounter()
     }
 
     override suspend fun insertCat(cat: Cat) {

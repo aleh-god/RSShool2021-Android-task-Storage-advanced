@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferenceScreen"
+    >
+
+    <ListPreference
+        app:key="dao"
+        app:title="Choose DAO"
+        app:summary="Choose your DBMS implementation"
+        android:entries="@array/dao_names_array"
+        android:entryValues="@array/dao_values_array"
+        />
+
+    <ListPreference
+        app:key="sortBy"
+        app:title="Select order"
+        app:summary="Select the sort order of the list"
+        android:entries="@array/order_sortBy_names_array"
+        android:entryValues="@array/order_sortBy_values_array"
+        />
+</PreferenceScreen>

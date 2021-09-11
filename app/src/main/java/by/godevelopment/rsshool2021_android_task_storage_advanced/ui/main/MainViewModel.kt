@@ -9,7 +9,7 @@ class CatViewModel (private val repository: CatRepository) : ViewModel() {
 
     // Using LiveData and caching what allWords returns has several benefits
     // added a public LiveData member variable to cache the list of words.
-    val allCats: LiveData<List<Cat>> = repository.getFlowAllCats.asLiveData()
+    val allCats: LiveData<List<Cat>> = repository.getLiveDataAllCats
 
 //    val user: LiveData<User> = liveData {
 //        val data = database.loadUser() // loadUser is a suspend function.
