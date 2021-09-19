@@ -9,9 +9,15 @@
     <string name="add_new_cat">Add new cat</string>
 
     <string name="titleListFragment">Task Storage</string>
-    <string name="titleAddCatFragment">Add cat to list</string>
+    <string name="titleAddItemFragment">Add cat to list</string>
     <string name="titleSettingsFragment">Settings</string>
-    <string name="check">Done</string>
-    <string name="add_item_list_button">Add item list button</string>
+    <string name="titleEditItemFragment">Edit Cat</string>
+    <string name="add_item_list_button">Add cat list button</string>
     <string name="settings">Settings</string>
+    <string name="header">Header</string>
+    <string name="check">Done</string>
+    <string name="save_cat">Save edit cat</string>
+    <string name="cat_id">Cat ID =</string>
+    <string name="delete_cat">Delete cat!</string>
+
 </resources>

@@ -47,7 +47,7 @@ class CatReaderDbHelper(context: Context) : SQLiteOpenHelper(
 
         private const val SQL_INSERT_ENTRIES =
 //            "INSERT INTO cat_table (name, age, breed) VALUES ('Jesus', 33, 'Heaven');"
-            "INSERT INTO cat_table (name, age, breed) VALUES (\"Missy\", 4, \"Snowshoe\"),(\"Lucy\", 11, \"Chausie\"),(\"Oscar\", 14, \"Aegean\"),(\"Simba\", 2, \"Savannah\"),(\"Oliver\", 2, \"Maine Coon\"),(\"Simba\", 6, \"Oriental Longhair\"),(\"Alfie\", 18, \"Toyger\"),(\"Shadow\", 3, \"Lykoi\"),(\"Lucy\", 16, \"Chausie\"),(\"Misty\", 11, \"Highlander\"),(\"Felix\", 12, \"Abyssinian\"),(\"Felix\", 2, \"Egyptian Mau\"),(\"Oliver\", 10, \"Sokoke\"),(\"Daisy\", 6, \"Abyssinian\"),(\"Coco\", 4, \"Snowshoe\"),(\"Smokey\", 1, \"Norwegian Forest Cat\"),(\"Lucy\", 13, \"Ocicat\"),(\"Lucky\", 13, \"Exotic Shorthair\"),(\"Smokey\", 17, \"Oriental Bicolor\"),(\"Coco\", 16, \"American Shorthair\"),(\"Oliver\", 10, \"Siamese\"),(\"Missy\", 16, \"Minskin\"),(\"Molly\", 4, \"Tonkinese\"),(\"Simba\", 4, \"Korn Ja\"),(\"Coco\", 8, \"Toyger\"),(\"Millie\", 14, \"Japanese Bobtail\"),(\"Poppy\", 6, \"American Bobtail\"),(\"Alfie\", 6, \"Napoleon\"),(\"Molly\", 13, \"California Spangled\"),(\"Bella\", 7, \"Manx\");"
+            "INSERT INTO cat_table (name, age, breed) VALUES (\"Missy\", 4, \"Snowshoe\"),(\"Lucy\", 11, \"Chausie\"),(\"Oscar\", 14, \"Aegean\"),(\"Simba\", 2, \"Savannah\"),(\"Oliver\", 2, \"Maine Coon\"),(\"Simba\", 6, \"Oriental Longhair\"),(\"Alfie\", 18, \"Toyger\"),(\"Bella\", 7, \"Manx\");"
 
         private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${ContractDB.FeedEntry.TABLE_NAME}"
     }

@@ -59,16 +59,8 @@ abstract class CatDataBase : RoomDatabase() {
                     catDao.deleteAll()
 
                     // Add sample
-                    val id = 0
-                    val name = "Jesus"
-                    val age = 10
-                    val breed = "Godcat"
-                    var cat = Cat(id, name, age, breed)
-                    catDao.insertCat(cat)
-                    cat = Cat(0, "Bob", 25, "Human")
-                    catDao.insertCat(cat)
-                    cat = Cat(0, "Tom", 20, "Toon'sCat")
-                    catDao.insertCat(cat)
+                    val cats = listOf<Cat>(Cat(0, "Missy", 4, "Snowshoe"), Cat(0, "Lucy", 11, "Chausie"), Cat(0, "Oscar", 14, "Aegean"), Cat(0, "Simba", 2, "Savannah"), Cat(0, "Oliver", 2, "Maine Coon"), Cat(0, "Simba", 6, "Oriental Longhair"), Cat(0, "Alfie", 18, "Toyger"), Cat(0, "Bella", 7, "Manx"))
+                    for (cat in cats) catDao.insertCat(cat)
                 }
             }
         }

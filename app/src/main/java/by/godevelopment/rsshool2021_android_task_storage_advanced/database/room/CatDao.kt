@@ -29,4 +29,8 @@ interface CatDao {
     @Delete
     suspend fun deleteCat(cat: Cat)
 
+
+    @Query("SELECT * FROM cat_table")
+    fun getAllCats(): List<Cat>
+
 }

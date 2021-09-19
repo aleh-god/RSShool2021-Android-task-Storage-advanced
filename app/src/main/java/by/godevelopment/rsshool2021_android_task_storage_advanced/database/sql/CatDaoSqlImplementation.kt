@@ -24,7 +24,7 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
     init {
         updateChangeDataBaseCounter.value = 0
     }
-    private val listCatsFromDB: LiveData<List<Cat>> = updateChangeDataBaseCounter.map { it -> getListCatsFromDB() }
+    private val listCatsFromDB: LiveData<List<Cat>> = updateChangeDataBaseCounter.map { getListCatsFromDB() }
 
     private fun updateChangeDataBaseCounter() {
         updateChangeDataBaseCounter.value = ++counterChangeDataBase
@@ -123,6 +123,10 @@ class CatDaoSqlImplementation(context: Context) : CatDao {
             updateChangeDataBaseCounter()
         }
         else Log.i("DAO", "ERROR delete cat!!!")
+    }
+
+    override fun getAllCats(): List<Cat> {
+        return getListCatsFromDB()
     }
 
     fun getCatFromDataBase(idCat: Int) : Cat {
